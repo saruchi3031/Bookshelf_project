@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-//import {useHistory} from 'react-router-dom';
+//import {useNavigate} from 'react-router-dom';
 import { registerUserAction } from '../../redux/actions/users/usersActions';
-//let history= useHistory();
-const RegisterUser = ({ history }) => {
+//const navigate= useNavigate();
+const RegisterUser = ({ navigate }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -18,9 +18,9 @@ const RegisterUser = ({ history }) => {
   
     useEffect(() => {
       if (userInfo) {
-        history.push('/dashboard');
+        navigate('/dashboard');
       }
-    }, [userInfo]);
+    }, [navigate, userInfo]);
   
     const formSubmitHandler = e => {
       e.preventDefault();

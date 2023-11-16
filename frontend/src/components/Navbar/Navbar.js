@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUserAction } from '../../redux/actions/users/usersActions';
 
-const Navbar = props => {
+const Navbar = () => {
   const state = useSelector(state => state.userLogin);
 
   const navigate = useNavigate();
@@ -15,13 +15,13 @@ const Navbar = props => {
     navigate('/');
   };
 
-  const { userInfo, loading, error } = state;
+  const { userInfo } = state;
   return (
     <header>
       <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
-        <a className='navbar-brand' to='/'>
-          BK
-        </a>
+        <Link className='navbar-brand' to='/'>
+          BS
+        </Link>
         <button
           className='navbar-toggler'
           type='button'
@@ -36,9 +36,9 @@ const Navbar = props => {
         <div className='collapse navbar-collapse' id='navbarColor01'>
           <ul className='navbar-nav m-auto'>
             <li className='nav-item active'>
-              <a className='nav-link' to='/'>
+              <Link className='nav-link' to='/'>
                 Home <span className='sr-only'>(current)</span>
-              </a>
+              </Link>
             </li>
             {!userInfo ? (
               <>
