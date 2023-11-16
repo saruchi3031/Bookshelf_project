@@ -1,17 +1,27 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutUserAction } from '../../redux/actions/users/usersActions';
 
-const Navbar = () => {
+const Navbar = props => {
   const state = useSelector(state => state.userLogin);
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const logoutHandler = () => {
+    dispatch(logoutUserAction());
+    navigate('/');
+  };
 
   const { userInfo, loading, error } = state;
   return (
     <header>
       <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
-        <Link className='navbar-brand' to='/'>
-          BS
-        </Link>
+        <a className='navbar-brand' to='/'>
+          BK
+        </a>
         <button
           className='navbar-toggler'
           type='button'
@@ -26,53 +36,52 @@ const Navbar = () => {
         <div className='collapse navbar-collapse' id='navbarColor01'>
           <ul className='navbar-nav m-auto'>
             <li className='nav-item active'>
-              <Link className='nav-link' to='/'>
+              <a className='nav-link' to='/'>
                 Home <span className='sr-only'>(current)</span>
-              </Link>
+              </a>
             </li>
-            
-              
-            <>
-              <li className='nav-item'>
-                <Link className='nav-link' to='/login'>
-                  Login
-                </Link>
-              </li>
-              <li className='nav-item'>
-                <Link className='nav-link' to='/register'>
-                  Register
-                </Link>
-              </li>
-            </>
-
-            {/* Drop dowm */}
-            {true ? (
-              <li className='nav-item dropdown'>
-                
-                    Add book
-                  </a>
-                  <a className='dropdown-item' to='/books'>
-                    Books
-                  </a>
-
-                  <div className='dropdown-divider'></div>
-                  <button className='dropdown-item'>Logout</button>
-                </div>
-              </li>
+            {!userInfo ? (
+              <>
+                <li className='nav-item'>
+                  <Link className='nav-link' to='/login'>
+                    Login
+                  </Link>
+                </li>
+                <li className='nav-item'>
+                  <Link className='nav-link' to='/register'>
+                    Register
+                  </Link>
+                </li>
+              </>
             ) : (
-              ''
+              <>
+                <li className='nav-item'>
+                  <Link className='nav-link' to='/books'>
+                    Books
+                  </Link>
+                </li>
+                <li className='nav-item'>
+                  <Link className='nav-link' to='/addbook'>
+                    Add book
+                  </Link>
+                </li>
+
+                <li className='nav-item'>
+                  <Link className='nav-link' to='/users'>
+                    Users
+                  </Link>
+                </li>
+                <li className='nav-item'>
+                  <Link
+                    onClick={logoutHandler}
+                    className='nav-link'
+                    to='/login'>
+                    Logout
+                  </Link>
+                </li>
+              </>
             )}
           </ul>
-          <form className='form-inline my-2 my-lg-0'>
-            <input
-              className='form-control mr-sm-2'
-              type='text'
-              placeholder='Search'
-            />
-            <button className='btn btn-secondary my-2 my-sm-0' type='submit'>
-              Search
-            </button>
-          </form>
         </div>
       </nav>
     </header>
